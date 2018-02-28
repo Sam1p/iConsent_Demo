@@ -1,5 +1,5 @@
 var LOCATION = function(success, fail) {
-	
+
 	function showPosition(position) {
 		$('#gm-map').gmap3({
 			center: [position.coords.latitude, position.coords.longitude],
@@ -8,14 +8,14 @@ var LOCATION = function(success, fail) {
 		}).marker([
 			{position:[position.coords.latitude, position.coords.longitude]}
 		]);
-		
+
 		var msg = "Is this your location?";
 		readText(msg, function(){});
-		
+
 		setTimeout(function() {
 			showMessage(msg, [
 				{
-					name:"No", 
+					name:"No",
 					click:function(e) {
 						$(this.parentNode.parentNode.parentNode).remove();
 						fail("Clicked no");
@@ -23,7 +23,7 @@ var LOCATION = function(success, fail) {
 					}
 				},
 				{
-					name:"Yes", 
+					name:"Yes",
 					click:function(e) {
 						$(this.parentNode.parentNode.parentNode).remove();
 						success(position.coords.latitude, position.coords.longitude);
@@ -49,8 +49,8 @@ var LOCATION = function(success, fail) {
 				fail("An unknown error occurred.");
 				break;
 		}
-	} 
-	
+	}
+
 	this.getLocation = function() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -65,17 +65,17 @@ var GYROSCOPE = function(callback) {
 	var moved_a_lot = false;
 	var check = true;
 	var callback2 = null;
-	
+
 	function handleOrientation(event) {
 		if (check) {
 			//var absolute = event.absolute;
 			var _alpha    = event.alpha;
 			var _beta     = event.beta;
 			var _gamma    = event.gamma;
-			
+
 			if (alpha != null && beta != null && gamma != null) {
 				var distance = Math.sqrt(Math.pow(_alpha-alpha, 2) + Math.pow(_beta-beta, 2) + Math.pow(_gamma-gamma, 2));
-				
+
 				if (distance > 7 && distance < 10) {
 					moved_a_lot = true;
 					window.removeEventListener("deviceorientation", handleOrientation);
@@ -83,29 +83,32 @@ var GYROSCOPE = function(callback) {
 					callback2();
 				}
 			}
-			
+
 			alpha = _alpha;
 			beta = _beta;
 			gamma = _gamma;
 		}
 	}
-	
+
 	this.listen = function(callback) {
 		callback2 = callback;
 		window.addEventListener("deviceorientation", handleOrientation, true);
 	};
-	
+
 	this.remove = function() {
-		//window.removeEventListener("deviceorientation", handleOrientation);	
+		//window.removeEventListener("deviceorientation", handleOrientation);
 		check = false;
 	};
 };
 
 var AUDIO = function(success, fail) {
-	
+
 	var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+	// SI: This is the bug or unsupported feature. iOS doesn't seem have window.webkitSpeechRecognition
+	// it is unknown object
+ alert(SpeechRecognition);
 	var recognition = new SpeechRecognition();
-		
+
 	/*
 	var recorder = document.getElementById('recorder');
 
@@ -117,7 +120,7 @@ var AUDIO = function(success, fail) {
 	});
 	*/
 
-	recognition.onstart = function() { 
+	recognition.onstart = function() {
 	  //document.body.innerHTML += 'Voice recognition activated. Try speaking into the microphone.<br/>';
 	}
 
@@ -133,7 +136,7 @@ var AUDIO = function(success, fail) {
 	recognition.onresult = function(event) {
 
 	  // event is a SpeechRecognitionEvent object.
-	  // It holds all the lines we have captured so far. 
+	  // It holds all the lines we have captured so far.
 	  // We only need the current one.
 	  var current = event.resultIndex;
 
@@ -143,7 +146,7 @@ var AUDIO = function(success, fail) {
 	  // Add the current transcript to the contents of our Note.
 	  //noteContent += transcript;
 	  //noteTextarea.val(noteContent);
-	  
+
 		var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
 
 		if (!mobileRepeatBug) {
@@ -152,11 +155,11 @@ var AUDIO = function(success, fail) {
 			success(transcript);
 		}
 	}
-		
+
 	this.abort = function() {
 		recognition.abort();
 	};
-	
+
 	this.listen = function() {
 		recognition.start();
 	};
@@ -169,17 +172,17 @@ var FACE = function (success, fail) {
         var camera = document.getElementById('camera');
 
         camera.addEventListener('change', function(e) {
-            var imageFile = e.target.files[0];     
+            var imageFile = e.target.files[0];
             var reader = new FileReader();
             var fileType;
-			
+
 			var popup = document.createElement("div");
 			popup.classList.add("glh_popup_bg");
 			popup.classList.add("glh_popup_loader");
 			document.body.appendChild(popup);
 
             //wire up the listener for the async 'loadend' event
-            reader.addEventListener('loadend', function () {    
+            reader.addEventListener('loadend', function () {
                 //get the result of the async readAsArrayBuffer call
                 var fileContentArrayBuffer = reader.result;
 
@@ -193,13 +196,13 @@ var FACE = function (success, fail) {
 
                 //read the file asynchronously
                 reader.readAsArrayBuffer(imageFile);
-            }   
+            }
         });
 	};
 
 	function sendImage(fileContentArrayBuffer, fileType) {
 
-	
+
         // **********************************************
         // *** Update or verify the following values. ***
         // **********************************************
@@ -242,18 +245,18 @@ var FACE = function (success, fail) {
             // Request body.
 			processData: false,
             data: new Blob([fileContentArrayBuffer], { type: fileType })
-			
+
 			// as url
 			//data: '{"url": "https://www.taylorherring.com/blog/wp-content/uploads/2015/03/Archetypal-Male-Face-of-Beauty-embargoed-to-00.01hrs-30.03.15.jpg"}',
         }).done(function(data) {
 			$(".glh_popup_loader").remove();
-			
+
 			if (data.length > 0) {
 				success(data[0].faceAttributes);
 			} else {
 				fail("No faces detected, try again!");
 			}
-        }).fail(function(jqXHR, textStatus, errorThrown) {	
+        }).fail(function(jqXHR, textStatus, errorThrown) {
 			$(".glh_popup_loader").remove();
             fail(errorThrown);
         });
@@ -363,7 +366,7 @@ var gyro = new GYROSCOPE(function(distance) {
 	readText(str, function(){});
 	showMessage(str, [
 		{
-			name:"OK", 
+			name:"OK",
 			click:function(e) {
 				$(this.parentNode.parentNode.parentNode).remove();
 				return false;
@@ -398,15 +401,15 @@ $(".glh_page_1 .glh_button").click(function() {
 
 function handleConsentMessage() {
 	$(".glh_page_1, .glh_page_2").toggleClass("glh_show");
-	
+
 	var url = new URL(window.location.href);
 	var user = url.searchParams.get("user");
-	
+
 	GLOB_other_user = user;
 	document.getElementById("user_name").innerHTML = GLOB_user;
-	
+
 	readText("Please consent to the following", function(){});
-	
+
 	$(".glh_page_2 .glh_button").click(function() {
 		GLOB_consent_message = hashFnv32a(document.getElementById("consent_message").innerText, true, 5437);
 		handleLocation();
@@ -462,16 +465,19 @@ function handleFace() {
 
 function handleAudio() {
 	$(".glh_page_4, .glh_page_5").toggleClass("glh_show");
-	
 	document.getElementById("speak_message").innerHTML = GLOB_speak_message;
 	var tim = -1;
-	
+
+	// This will trigger audio which will fail on iPhone.
+	/*
 	var audio = new AUDIO(function(user_message) {
+		alert(13);
 		clearTimeout(tim);
+		alert(14);
 		readText("You said: " + user_message, function(){});
 		showMessage("You said: " + user_message, [
 			{
-				name:"OK", 
+				name:"OK",
 				click:function(e) {
 					$(this.parentNode.parentNode.parentNode).remove();
 					getTextSentiment(user_message);
@@ -480,27 +486,35 @@ function handleAudio() {
 			}
 		]);
 	}, function(message) {
+		alert(15);
 		clearTimeout(tim);
 		console.error(message);
 		getTextSentiment("");
 	});
-	
-	readText("Please say " + GLOB_speak_message, function() {});
-	
-	setTimeout(function() {
+	*/
+
+	readText("Please say " + GLOB_speak_message, function() {
+	});
+
+	// Record Voice, stubbed out for now
+	/* setTimeout(function() {
 		tim = setTimeout(function() {
 			audio.abort();
 			console.error("Time out on audio");
 			getTextSentiment(GLOB_speak_message);
 		}, 5000);
-		
+
 		audio.listen();
-		
+
 		//gyro.listen(function() {
 		//	gyro.remove();
 		//	audio.abort();
 		//});
-	}, 2000);
+	}, 2000); */
+
+	setTimeout(function() {
+		getTextSentiment(GLOB_speak_message);
+	}, 5000);
 }
 
 function getTextSentiment(user_message) {
@@ -533,15 +547,15 @@ function handleConsent() {
 	$(".glh_page_5, .glh_page_6").toggleClass("glh_show");
 	$.ajax({
 		url: '/submitConsent?user=' + encodeURIComponent(GLOB_user) +
-				            '&other_user=' + encodeURIComponent(GLOB_other_user) + 
-					        '&message=' + encodeURIComponent(GLOB_consent_message) + 
-					        '&lat=' + encodeURIComponent(GLOB_latitude) + 
-					        "&long=" + encodeURIComponent(GLOB_longitude) + 
-					        "&smile=" + encodeURIComponent(GLOB_smile) + 
-							"&age=" + encodeURIComponent(GLOB_age) + 
-							"&gender=" + encodeURIComponent(GLOB_gender) + 
-							"&glasses=" + encodeURIComponent(GLOB_glasses) + 
-							"&emotion=" + encodeURIComponent(JSON.stringify(GLOB_emotion)) + 
+				            '&other_user=' + encodeURIComponent(GLOB_other_user) +
+					        '&message=' + encodeURIComponent(GLOB_consent_message) +
+					        '&lat=' + encodeURIComponent(GLOB_latitude) +
+					        "&long=" + encodeURIComponent(GLOB_longitude) +
+					        "&smile=" + encodeURIComponent(GLOB_smile) +
+							"&age=" + encodeURIComponent(GLOB_age) +
+							"&gender=" + encodeURIComponent(GLOB_gender) +
+							"&glasses=" + encodeURIComponent(GLOB_glasses) +
+							"&emotion=" + encodeURIComponent(JSON.stringify(GLOB_emotion)) +
 					        "&text_sentiment=" + encodeURIComponent(GLOB_text_sentiment),
 		type: 'GET',
 		success: function(data, textStatus, jqXHR){
@@ -552,5 +566,5 @@ function handleConsent() {
 			alert(errorThrown);
 			$(".glh_page_6, .glh_page_0").toggleClass("glh_show");
 		}
-	});	
+	});
 }

@@ -66,10 +66,10 @@ var TEMP_BC_DATA = {};
 
 app.get('/text_sentiment', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
-	
+
 	var user_message = req.query.str;
 	console.log("User said:", user_message);
-	
+
 	getSentiment(user_message, function(value) {
 		res.send(JSON.stringify({
 			'value' : value
@@ -84,50 +84,55 @@ app.get('/submitConsent', function(req, res) {
 
 	TEMP_BC_DATA = req.query;
 	console.log(JSON.stringify(req.query));
-	
+
 	res.setHeader('Content-Type', 'application/json');
-	
-	/*
+
+
 	res.send(JSON.stringify({
 		'status' : 'ok'
 	}));
-	*/
-	
+
+	// For actually storing on Blockchain (stubbed for now)
+	/*
 	saveResult(req.query, function() {
 		res.send(JSON.stringify({
 			'status' : 'ok'
 		}));
 	}, function(message) {
-		/*
-		console.error(message);
-		res.status(500);
-		res.send({"message":message});
-		*/
+
+		//console.error(message);
+		//res.status(500);
+		//res.send({"message":message});
+
 		res.send(JSON.stringify({
 			'status' : 'ok'
 		}));
-	});
-	
+	});*/
+
 });
 app.get('/getConsent', function(req, res) {
 
 	res.setHeader('Content-Type', 'application/json');
-	
-	getResult(function(data) {
+
+	// Connect to blockchain to retrieve data
+
+	/*getResult(function(data) {
 		res.send(JSON.stringify(data));
 	}, function(message) {
-		/*
-		console.error(message);
-		res.status(500);
-		res.send({"message":message});
-		*/
+
+		//console.error(message);
+		//res.status(500);
+		//res.send({"message":message});
+
 		res.send(JSON.stringify(BU_DATA));
 	});
-	
-	/*
+	*/
+
+
 	// FOR DEBUG
-	//res.send(JSON.stringify(TEMP_BC_DATA));
-	
+	res.send(JSON.stringify(TEMP_BC_DATA));
+
+	/*
 	// OTHER DEBUG
 	var data = BU_DATA
 	res.send(JSON.stringify(data));
@@ -167,7 +172,7 @@ function saveResult(data, success, fail) {
 	req.on('error', function(e) {
 		fail(e.message);
 	});
-	
+
 	var full_data = JSON.stringify({
 		args : {consent : JSON.stringify(data)},
 		value : 0,
@@ -208,7 +213,7 @@ function getResult(success, fail) {
 	req.on('error', function(e) {
 		fail(e.message);
 	});
-	
+
 	req.write(JSON.stringify({
 		args : {},
 		value : 0,
@@ -229,7 +234,7 @@ function getSentiment(user_message, success, fail) {
 	// Replace or verify the region.
 
 	// You must use the same region in your REST API call as you used to obtain your access keys.
-	// For example, if you obtained your access keys from the westus region, replace 
+	// For example, if you obtained your access keys from the westus region, replace
 	// "westcentralus" in the URI below with "westus".
 
 	// NOTE: Free trial access keys are generated in the westcentralus region, so if you are using
@@ -275,7 +280,7 @@ function getSentiment(user_message, success, fail) {
 
 	get_language (documents);
 	*/
-	
+
 	get_language({
 		'documents' : [
 			{ 'id': '1', 'language': 'en', 'text': user_message }

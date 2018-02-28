@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<title>Blockchain Consent Admin App</title>
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<link rel="stylesheet" type="text/css" href="css/admin.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+		<script src="js/jquery-3.3.1.min.js" defer="defer"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA1eVfWL_pDHe885PoPbbXeC3JZdGpUv4" defer="defer"></script>
+		<script src="js/gmap3.min.js" defer="defer"></script>
+		<script src="js/admin.js" defer="defer"></script>
+	</head>
+	<body>
+		<div id="glh_consent_between_title">
+			Consent between
+		</div>
+		<div id="glh_consent_between">
+			<span id="user_1"></span>&#160; & &#160;<span id="user_2"></span> <img class="glh_icon" src="/images/ic_lock_white_24px.svg"/>
+		</div>
+		<div id="glh_consent_tab_title">
+			Consentee Details
+		</div>
+		
+		
+		<div id="glh_consent_desc_area">
+			<div style="display:flex;align-items: center;justify-content: center;">
+				<div>
+					<img class="glh_icon" src="/images/ic_subject_white_24px.svg"/> 
+				</div>
+				<div>
+					Consent Description:
+				</div>
+			</div>
+			<div>
+				<div id="consent_message">
+					<div>
+						<b>Purpose of Study</b>: The purpose of the study is <b>[X]</b>
+					</div>
+					<br/>
+					<div>
+						<b>Description of the Study Procedures</b>: If you agree to be in this study, you will be asked to do the following things: <b>[X]</b>
+					</div>
+					<br/>
+					<div>
+						<b>Risks/Discomforts of Being in this Study</b>: The study has the following risks: <b>[X]</b>
+					</div>
+					<br/>
+					<div>
+						<b>Benefits of Being in the Study</b>: The benefits of participation are: <b>[X]</b>
+					</div>
+					<br/>
+					<div>
+						<b>Confidentiality [choose one of the following]</b>: This study is anonymous.  We will not be collecting or retaining any information about your identity.
+					</div>
+					<br/>
+					<div>
+						<b>Payments</b>: You will receive the following payment/reimbursement: <b>[X]</b>
+					</div>
+					<br/>
+					<div>
+						<b>Right to Refuse or Withdraw</b>: The decision to participate in this study is entirely up to you. You may refuse to take part in the study at any time without affecting your relationship with the investigators of this study.
+					</div>
+					<br/>
+					<div>
+						<b>Right to Ask Questions and Report Concerns</b>: You have the right to ask questions about this research study and to have those questions answered by me before, during or after the research.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="glh_main_area">
+			<div id="glh_main_area_properties">
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_apps_white_24px.svg"/> 
+					</div>
+					<div>
+						Consent Description Hash: <span id="message"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_remove_red_eye_white_24px.svg"/> 
+					</div>
+					<div>
+						Glasses: <span id="glasses"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_watch_later_white_24px.svg"/> 
+					</div>
+					<div>
+						Age: <span id="age"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_accessibility_white_24px.svg"/> 
+					</div>
+					<div>
+						Gender: <span id="gender"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_report_problem_white_24px.svg"/> 
+					</div>
+					<div>
+						Emotion: 
+					</div>
+					<div style="margin-left:10px;">
+						<span style="white-space:nowrap;">Anger <progress value="0" max="1"></progress> </span>
+						<span style="white-space:nowrap;">Contempt <progress value="0" max="1"></progress>  </span>
+						<span style="white-space:nowrap;">Disgust <progress value="0" max="1"></progress></span>
+						<span style="white-space:nowrap;">Fear <progress value="0" max="1"></progress> </span> <br/>
+						<span style="white-space:nowrap;">Happiness <progress value="0" max="1"></progress> </span>
+						<span style="white-space:nowrap;">Neutral <progress value="0" max="1"></progress> </span>
+						<span style="white-space:nowrap;">Saddness <progress value="0" max="1"></progress> </span>
+						<span style="white-space:nowrap;">Surprise <progress value="0" max="1"></progress> </span>
+						<span id="emotion"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_face_white_24px.svg"/> 
+					</div>
+					<div>
+						Smile:
+					</div>
+					<div>
+						<img class="glh_icon glh_smile_icon glh_answer_icon" src="/images/ic_sentiment_very_dissatisfied_white_24px.svg"/>
+						<img class="glh_icon glh_smile_icon glh_answer_icon" src="/images/ic_sentiment_neutral_white_24px.svg"/>
+						<img class="glh_icon glh_smile_icon glh_answer_icon" src="/images/ic_sentiment_very_satisfied_white_24px.svg"/>
+						<span id="smile"></span>
+					</div>
+				</div>
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_record_voice_over_white_24px.svg"/> 
+					</div>
+					<div>
+						Speech Confirmation Accuracy:
+					</div>
+					<div>
+						<img class="glh_icon glh_speech_icon glh_answer_icon" src="/images/ic_thumb_down_white_24px.svg"/>
+						<img class="glh_icon glh_speech_icon glh_answer_icon" src="/images/ic_thumb_up_white_24px.svg"/>
+						<span id="text_sentiment"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div id="glh_map_area_properties">
+				<div>
+					<div>
+						<img class="glh_icon" src="/images/ic_map_white_24px.svg"/> 
+					</div>
+					<div>
+						Consent Location:</span>
+					</div>
+				</div>
+				<div>
+					<div id="gm-map"></div>
+				</div>
+				<div>
+					<i>&#60;lat, long&#62;&#160;&#60;<span id="latitude"></span>, <span id="longitude"></span>&#62;</i>
+				</div>
+			</div>
+		</div>
+		
+		
+		<br/>
+
+		<!--
+		<div>
+			<img class="glh_icon" src="/images/ic_location_on_white_24px.svg"/>
+			<img class="glh_icon" src="/images/ic_map_white_24px.svg"/>
+			<img class="glh_icon" src="/images/ic_tag_faces_white_24px.svg"/>
+		</div>
+		-->
+	</body>
+</html> 

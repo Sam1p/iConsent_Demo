@@ -1,0 +1,76 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<title>Blockchain Consent App</title>
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+		<script src="js/jquery-3.3.1.min.js" defer="defer"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA1eVfWL_pDHe885PoPbbXeC3JZdGpUv4" defer="defer"></script>
+		<script src="js/gmap3.min.js" defer="defer"></script>
+		<script src="js/main.js" defer="defer"></script>
+	</head>
+	<body>
+		<div class="glh_page glh_page_0">
+			<div>Consent Denied!</div>
+		</div>
+		<div class="glh_page glh_show glh_page_1">
+			<div>Welcome to iConsent</div>
+			<div class="glh_button">Next</div>
+		</div>
+		<div class="glh_page glh_page_2">
+			<div>You <span id="user_name"></span>, consent to:</div>
+			
+			<div id="consent_message">
+				<div>
+					<b>Purpose of Study</b>: The purpose of the study is <b>[X]</b>
+				</div>
+				<br/>
+				<div>
+					<b>Description of the Study Procedures</b>: If you agree to be in this study, you will be asked to do the following things: <b>[X]</b>
+				</div>
+				<br/>
+				<div>
+					<b>Risks/Discomforts of Being in this Study</b>: The study has the following risks: <b>[X]</b>
+				</div>
+				<br/>
+				<div>
+					<b>Benefits of Being in the Study</b>: The benefits of participation are: <b>[X]</b>
+				</div>
+				<br/>
+				<div>
+					<b>Confidentiality [choose one of the following]</b>: This study is anonymous.  We will not be collecting or retaining any information about your identity.
+				</div>
+				<br/>
+				<div>
+					<b>Payments</b>: You will receive the following payment/reimbursement: <b>[X]</b>
+				</div>
+				<br/>
+				<div>
+					<b>Right to Refuse or Withdraw</b>: The decision to participate in this study is entirely up to you. You may refuse to take part in the study at any time without affecting your relationship with the investigators of this study.
+				</div>
+				<br/>
+				<div>
+					<b>Right to Ask Questions and Report Concerns</b>: You have the right to ask questions about this research study and to have those questions answered by me before, during or after the research.
+				</div>
+			</div>
+			<div class="glh_button">Next</div>
+		</div>
+		<div class="glh_page glh_page_3">
+			<div id="gm-map"></div>
+		</div>
+		<div class="glh_page glh_page_4">
+			<div>Take a Selfie</div>
+			<div><input id="camera" type="file" accept="image/*" capture="user"></div>
+		</div>
+		<div class="glh_page glh_page_5">
+			<div>Say "<span id="speak_message"></span>"</div>
+		</div>
+		<div class="glh_page glh_page_6">
+			<div>Submitting consent on the Blockchain...</div>
+		</div>
+		<div class="glh_page glh_page_7">
+			<div>You have submitted your consent!</div>
+		</div>
+	</body>
+</html> 

@@ -1,0 +1,90 @@
+html {
+
+}
+body {
+	margin:0;
+	font-family: 'Roboto', sans-serif;
+}
+
+#glh_consent_desc_area {
+	margin:0 20px;
+}
+#glh_main_area {
+	display:flex;
+	margin:0 20px;
+}
+#glh_main_area > div {
+	flex:1;
+}
+#glh_main_area_properties > div {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+#glh_map_area_properties > div {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+#glh_consent_between_title {
+	font-size:18px;
+	margin:5px 0;
+	text-align:center;
+}
+#glh_consent_between {
+	text-align:center;
+	font-size:30px;
+}
+#user_1 {
+	color:#00a791;
+	font-weight:bold;
+}
+#user_2 {
+	color:orange;
+	font-weight:bold;
+}
+
+#glh_consent_tab_title {
+	text-align:center;
+	border:2px solid #00a791;
+	color:#00a791;
+	padding:10px;
+	font-size:23px;
+	font-weight:bold;
+}
+
+
+#consent_message {
+	padding:10px 0;
+	border:1px solid black;
+	padding:10px;
+}
+
+
+
+.glh_icon {
+	background-color:#ff00b3;
+	width:20px;
+	height:20px;
+	border-radius:50%;
+	padding:7px;
+	margin:5px;
+}
+.glh_answer_icon {
+	background-color:#be0808;
+}
+
+
+
+
+#gm-map {
+    display: block;
+    width: 100%;
+    height: 300px;
+}
+
+progress {
+	width:50px;
+}
